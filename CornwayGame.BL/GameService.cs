@@ -32,7 +32,7 @@ namespace CornwayGame.BL
             return boardId;
         }
 
-        public void NextGeneration(string boardId)
+        public bool[][] NextGeneration(string boardId)
         {
             var board = _gameRepository.GetById(boardId);
             var boardCloned = BoardDeepClone(board);
@@ -48,6 +48,7 @@ namespace CornwayGame.BL
                 }
             }
             _gameRepository.Update(boardId, boardCloned);
+            return boardCloned;
         }
 
         public void UpdateLiveCells(string boardId, int[][] liveCellsCoordinates)

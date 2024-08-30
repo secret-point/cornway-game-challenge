@@ -37,7 +37,7 @@ namespace CornwayGame.BL.GameRules
                 int newH = indexY + neighborCoordinates[coordinateIndex][1];
                 if (newH < 0 || newI < 0 || newI >= board.Length || newH >= board[indexX].Length) continue;
 
-                if (board[newI][newH]== isLive)
+                if (board[newI][newH] == isLive)
                 {
                     currentNeighborCount++;
 
