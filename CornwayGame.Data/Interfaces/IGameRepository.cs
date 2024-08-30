@@ -9,5 +9,7 @@ namespace CornwayGame.Data.Interfaces
     public interface IGameRepository
     {
         string Add(bool[][] bools);
+        bool[][] GetById(string boardId);
+        void Update(string boardId, bool[][] board);
     }
 }

@@ -9,5 +9,6 @@ namespace CornwayGame.BL.Interfaces
     public interface IGameService
     {
         string CreateBoard(int height, int width);
+        void UpdateLiveCells(string expectedBoardId, int[][] liveCellsCoordinates);
     }
 }

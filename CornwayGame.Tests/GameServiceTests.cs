@@ -43,5 +43,41 @@ namespace CornwayGame.Tests
                 Assert.That(height, Is.EqualTo(row.Length));
             }
         }
+
+        [Test]
+        public void GivenAExistent_WhenFillLiveCells_ThenShouldHaveLiveCells()
+        {
+            string expectedBoardId = "2345";
+            string actualBoardId = string.Empty;
+            int[][] liveCellsCoordinates = new int[2][] { new int[] { 1, 2 }, new int[] { 2, 4 } };
+            bool[][] previousBoard = new bool[3][]{
+                new bool[] { false, false, false, false, false } ,
+                new bool[] { false, false, false, false, false },
+                new bool[] { false, false, false, false, false }
+            };
+
+            bool[][] actualBoard = Array.Empty<bool[]>();
+            bool[][] expectedBoard = new bool[3][]{
+                new bool[] { false, false, false, false, false },
+                new bool[] { false, false, true, false, false },
+                new bool[] { false, false, false, false, true }
+            };
+
+            _gameRepositoryMock.Setup(x => x.GetById(expectedBoardId))
+                    .Returns(previousBoard);
+            _gameRepositoryMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<bool[][]>()))
+                    .Callback<string, bool[][]>((_, x) => actualBoard = x);
+
+            _gameService.UpdateLiveCells(expectedBoardId, liveCellsCoordinates);
+
+            for (int i = 0; i < expectedBoard.Length; i++)
+            {
+                var row = expectedBoard[i];
+                for (int j = 0; j < row.Length; j++)
+                {
+                    Assert.That(actualBoard[i][j], Is.EqualTo(row[j]));
+                }
+            }
+        }
     }
 }
