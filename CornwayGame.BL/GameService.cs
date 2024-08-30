@@ -30,6 +30,13 @@ namespace CornwayGame.BL
             return boardId;
         }
 
+        public void NextGeneration(string boardId)
+        {
+            var board = _gameRepository.GetById(boardId);
+
+            _gameRepository.Update(boardId,board);
+        }
+
         public void UpdateLiveCells(string boardId, int[][] liveCellsCoordinates)
         {
             var board = _gameRepository.GetById(boardId); 

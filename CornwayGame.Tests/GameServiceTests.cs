@@ -125,6 +125,27 @@ namespace CornwayGame.Tests
         }
         #endregion
 
+        [Test]
+        public void GivenAExistentBoard_WhenNextGeneration_ThenItShouldReturnDifferentBoard()
+        {
+            var expectedBoard = new bool[3][] {
+                new bool[] { false, false, false, false },
+                new bool[] { false, false, false, false },
+                new bool[] { false, false, false, false }
+            };
+
+            var actualBoard = new bool[0][] { };
+
+            _gameRepositoryMock.Setup(x => x.GetById(It.IsAny<string>()))
+                .Returns(expectedBoard);
+
+            _gameRepositoryMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<bool[][]>()))
+                            .Callback<string,bool[][]>((x,y)=>actualBoard=y);
+
+            _gameService.NextGeneration(string.Empty);
+
+            Assert.That(expectedBoard, Is.Not.SameAs(actualBoard));
+        }
     }
 
 }
