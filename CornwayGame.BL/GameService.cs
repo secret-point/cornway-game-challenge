@@ -89,5 +89,9 @@ namespace CornwayGame.BL
             return clone;
         }
 
+        public Game GetGeneration(string boardId)
+        {
+            return _gameRepository.GetById(boardId);
+        }
     }
 }

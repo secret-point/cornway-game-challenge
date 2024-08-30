@@ -30,5 +30,26 @@ namespace CornwayGame.Web.Controllers
             var nextGenerationBoard = _gameService.NextGeneration(boardId);
             return nextGenerationBoard;
         }
+
+        [HttpPost("{boardId}/GetGeneration")]
+        public int GetGeneration([FromRoute] string boardId)
+        {
+            var nextGenerationBoard = _gameService.GetGeneration(boardId);
+            return nextGenerationBoard.Generation;
+        }
+
+        [HttpPost("{boardId}/GetFinalState")]
+        public int GetFinalState([FromRoute] string boardId)
+        {
+            var nextGenerationBoard = _gameService.GetGeneration(boardId);
+            return nextGenerationBoard.Generation;
+        }
+
+        [HttpPost("{boardId}/Restart")]
+        public int Restart([FromRoute] string boardId)
+        {
+            var nextGenerationBoard = _gameService.GetGeneration(boardId);
+            return nextGenerationBoard.Generation;
+        }
     }
 }

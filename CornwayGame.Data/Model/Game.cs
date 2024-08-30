@@ -8,8 +8,22 @@ namespace CornwayGame.Data.Model
 {
     public class Game
     {
-        public required bool[][] Board { get; set; }
+        public bool[][][] Boards { get; set; } = new bool[0][][];
+        public required bool[][] Board
+        {
+            get
+            {
+                return new bool[Board.Length][];
+            }
+            set
+            {
+                var boards = new bool[Board.Length + 1][][];
+                Array.Copy(Boards, boards, Boards.Length);
+                boards[Board.Length] = value;
+                Boards = boards;
+            }
+        }
         public int Generation { get; set; }
-        
+
     }
 }
