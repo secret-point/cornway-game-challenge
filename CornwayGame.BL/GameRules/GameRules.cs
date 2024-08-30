@@ -33,6 +33,7 @@ namespace CornwayGame.BL.GameRules
         {
             var countLiveNeighbor = 0;
             var countDeadNeighbor = 0;
+
             for (int coordinateIndex = 0; coordinateIndex < neighborCoordinates.Length; coordinateIndex++)
             {
                 int newI = i + neighborCoordinates[coordinateIndex][0];
@@ -49,6 +50,7 @@ namespace CornwayGame.BL.GameRules
                     countDeadNeighbor++;
                 }
             }
+
             return (countLiveNeighbor, countDeadNeighbor);
         }
     }
