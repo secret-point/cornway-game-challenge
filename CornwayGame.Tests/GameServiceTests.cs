@@ -9,12 +9,14 @@ namespace CornwayGame.Tests
     {
         private IGameService _gameService;
         private Mock<IGameRepository> _gameRepositoryMock;
+        private Mock<IGameRules> _gameRulesMock;
 
         [SetUp]
         public void Setup()
         {
             _gameRepositoryMock = new Mock<IGameRepository>();
-            _gameService = new GameService(_gameRepositoryMock.Object);
+            _gameRulesMock=new Mock<IGameRules>();
+            _gameService = new GameService(_gameRepositoryMock.Object, _gameRulesMock.Object);
         }
         #region Create Board Tests
         [Test]
@@ -164,6 +166,9 @@ namespace CornwayGame.Tests
 
             _gameRepositoryMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<bool[][]>()))
                             .Callback<string, bool[][]>((x, y) => actualBoard = y);
+
+            _gameRulesMock.Setup(x => x.ShouldToggleCell(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool[][]>()))
+                .Returns(true);
 
             _gameService.NextGeneration(string.Empty);
 

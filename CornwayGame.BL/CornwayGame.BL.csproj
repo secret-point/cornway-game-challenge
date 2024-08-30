@@ -10,8 +10,4 @@
     <ProjectReference Include="..\CornwayGame.Data\CornwayGame.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="GameRules\" />
-  </ItemGroup>
-
 </Project>

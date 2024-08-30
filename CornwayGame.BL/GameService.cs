@@ -6,9 +6,11 @@ namespace CornwayGame.BL
     public class GameService : IGameService
     {
         private readonly IGameRepository _gameRepository;
-        public GameService(IGameRepository gameRepository)
+        private readonly IGameRules _gameRules;
+        public GameService(IGameRepository gameRepository, IGameRules gameRules)
         {
             _gameRepository = gameRepository;
+            _gameRules = gameRules;
         }
 
         public string CreateBoard(int height, int width)
@@ -35,6 +37,16 @@ namespace CornwayGame.BL
             var board = _gameRepository.GetById(boardId);
             var boardCloned = BoardDeepClone(board);
 
+            for (int i = 0; i < board.Length; i++)
+            {
+                var column = board[i];
+                for (int h = 0; h < column.Length; h++)
+                {
+                    var toggleCell = _gameRules.ShouldToggleCell(i, h, board);
+                    if (toggleCell)
+                        boardCloned[i][h] = !board[i][h];
+                }
+            }
             _gameRepository.Update(boardId, boardCloned);
         }
 
