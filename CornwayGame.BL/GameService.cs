@@ -33,8 +33,8 @@ namespace CornwayGame.BL
         public void NextGeneration(string boardId)
         {
             var board = _gameRepository.GetById(boardId);
-
-            _gameRepository.Update(boardId,board);
+            var clonedBoard = BoardDeepClone(board);
+            _gameRepository.Update(boardId, clonedBoard);
         }
 
         public void UpdateLiveCells(string boardId, int[][] liveCellsCoordinates)
@@ -49,5 +49,21 @@ namespace CornwayGame.BL
             }
             _gameRepository.Update(boardId, board);
         }
+
+        private bool[][] BoardDeepClone(bool[][] board)
+        {
+            var clone = new bool[board.Length][];
+            for (int i = 0; i < board.Length; i++)
+            {
+                var row = new bool[board[i].Length];
+                for (int h = 0; h < row.Length; h++)
+                {
+                    row[h] = board[i][h];
+                }
+                clone[i] = row;
+            }
+            return clone;
+        }
+
     }
 }

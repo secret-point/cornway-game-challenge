@@ -124,7 +124,7 @@ namespace CornwayGame.Tests
             }
         }
         #endregion
-
+        #region Next Generation
         [Test]
         public void GivenAExistentBoard_WhenNextGeneration_ThenItShouldReturnDifferentBoard()
         {
@@ -146,6 +146,7 @@ namespace CornwayGame.Tests
 
             Assert.That(expectedBoard, Is.Not.SameAs(actualBoard));
         }
+        #endregion
     }
 
 }
