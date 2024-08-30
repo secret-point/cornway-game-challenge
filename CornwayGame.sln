@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CornwayGame.Web", "CornwayGame.Web\CornwayGame.Web.csproj", "{CBC10E31-5EE0-469E-8910-606FCE12C35C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CornwayGame.Web", "CornwayGame.Web\CornwayGame.Web.csproj", "{CBC10E31-5EE0-469E-8910-606FCE12C35C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CornwayGame.BL", "CornwayGame.BL\CornwayGame.BL.csproj", "{050F0607-A85A-4F74-B73E-968A89F811A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CornwayGame.Data", "CornwayGame.Data\CornwayGame.Data.csproj", "{B2388DFB-6D4A-4041-82A3-CA0D87DF2932}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CornwayGame.Tests", "CornwayGame.Tests\CornwayGame.Tests.csproj", "{5AE9F651-BFA8-4A7D-A29D-B6D18BE2643E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{CBC10E31-5EE0-469E-8910-606FCE12C35C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBC10E31-5EE0-469E-8910-606FCE12C35C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBC10E31-5EE0-469E-8910-606FCE12C35C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{050F0607-A85A-4F74-B73E-968A89F811A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{050F0607-A85A-4F74-B73E-968A89F811A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{050F0607-A85A-4F74-B73E-968A89F811A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{050F0607-A85A-4F74-B73E-968A89F811A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2388DFB-6D4A-4041-82A3-CA0D87DF2932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2388DFB-6D4A-4041-82A3-CA0D87DF2932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2388DFB-6D4A-4041-82A3-CA0D87DF2932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2388DFB-6D4A-4041-82A3-CA0D87DF2932}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AE9F651-BFA8-4A7D-A29D-B6D18BE2643E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AE9F651-BFA8-4A7D-A29D-B6D18BE2643E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AE9F651-BFA8-4A7D-A29D-B6D18BE2643E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AE9F651-BFA8-4A7D-A29D-B6D18BE2643E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

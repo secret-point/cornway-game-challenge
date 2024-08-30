@@ -4,3 +4,10 @@
 
 /.vs
 /CornwayGame.Web/obj
+/CornwayGame.Web/bin
+/CornwayGame.BL/obj
+/CornwayGame.BL/bin
+/CornwayGame.Data/obj
+/CornwayGame.Data/bin
+/CornwayGame.Tests/obj
+/CornwayGame.Tests/bin
