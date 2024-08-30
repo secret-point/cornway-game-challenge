@@ -32,14 +32,14 @@ namespace CornwayGame.Tests
         }
 
         [Test]
-        public void GivenAExistentBoard_WhenLiveCellNearTwoLiveCells_ThenItShouldReturnDifferentBoardCells()
+        public void GivenAExistentBoard_WhenLiveCellNearTwoLiveCells_ThenItShouldNotToggle()
         {
             var board = new bool[3][]{
                 new bool[3] { false, false, true },
                 new bool[3] { true, true, false },
                 new bool[3] { false, false, false }
             };
-            var expected = true;
+            var expected = false;
             var actual = _gameRules.ShouldToggleCell(1, 1, board);
 
 

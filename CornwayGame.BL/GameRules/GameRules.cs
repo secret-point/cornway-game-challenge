@@ -26,7 +26,10 @@ namespace CornwayGame.BL.GameRules
         {
             (int countLiveNeighbor, int countDeadNeighbor) = CalculateNeighbor(i, h, board);
 
-            return countLiveNeighbor < 2;
+            var underpopulationRule = countLiveNeighbor < 2;
+            var nearNeighborRule = countLiveNeighbor != 2;
+
+            return underpopulationRule && nearNeighborRule;
         }
 
         public (int, int) CalculateNeighbor(int i, int h, bool[][] board)
