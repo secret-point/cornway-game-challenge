@@ -30,8 +30,15 @@ namespace CornwayGame.BL
             return boardId;
         }
 
-        public void UpdateLiveCells(string expectedBoardId, int[][] liveCellsCoordinates)
+        public void UpdateLiveCells(string boardId, int[][] liveCellsCoordinates)
         {
+            var board = _gameRepository.GetById(boardId);
+            foreach (var cell in liveCellsCoordinates)
+            {
+                if (cell == null) continue;
+                board[cell[0]][cell[1]] = true;
+            }
+            _gameRepository.Update(boardId, board);
         }
     }
 }
