@@ -1,5 +1,6 @@
 ﻿using CornwayGame.BL.Interfaces;
 using CornwayGame.Data.Interfaces;
+using CornwayGame.Data.Model;
 
 namespace CornwayGame.BL
 {
@@ -34,7 +35,8 @@ namespace CornwayGame.BL
 
         public bool[][] NextGeneration(string boardId)
         {
-            var board = _gameRepository.GetById(boardId);
+            var gameData = _gameRepository.GetById(boardId);
+            var board = gameData.Board;
             var boardCloned = BoardDeepClone(board);
 
             for (int i = 0; i < board.Length; i++)
@@ -47,13 +49,20 @@ namespace CornwayGame.BL
                         boardCloned[i][h] = !board[i][h];
                 }
             }
-            _gameRepository.Update(boardId, boardCloned);
+            var game = new Game
+            {
+                Board = boardCloned,
+                Generation = gameData.Generation + 1
+            };
+            _gameRepository.Update(boardId, game);
             return boardCloned;
         }
 
         public void UpdateLiveCells(string boardId, int[][] liveCellsCoordinates)
         {
-            var board = _gameRepository.GetById(boardId); 
+            var gameData = _gameRepository.GetById(boardId);
+            if (gameData == null) throw new ArgumentException("Board Does not exists.");
+            var board = gameData.Board;
             if (board == null) throw new ArgumentException("Board Does not exists.");
 
             foreach (var cell in liveCellsCoordinates)
@@ -61,7 +70,8 @@ namespace CornwayGame.BL
                 if (cell == null) continue;
                 board[cell[0]][cell[1]] = true;
             }
-            _gameRepository.Update(boardId, board);
+            gameData.Board = board;
+            _gameRepository.Update(boardId, gameData);
         }
 
         private bool[][] BoardDeepClone(bool[][] board)

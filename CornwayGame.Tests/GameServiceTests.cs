@@ -1,6 +1,7 @@
 using CornwayGame.BL;
 using CornwayGame.BL.Interfaces;
 using CornwayGame.Data.Interfaces;
+using CornwayGame.Data.Model;
 using Moq;
 
 namespace CornwayGame.Tests
@@ -15,7 +16,7 @@ namespace CornwayGame.Tests
         public void Setup()
         {
             _gameRepositoryMock = new Mock<IGameRepository>();
-            _gameRulesMock=new Mock<IGameRules>();
+            _gameRulesMock = new Mock<IGameRules>();
             _gameService = new GameService(_gameRepositoryMock.Object, _gameRulesMock.Object);
         }
         #region Create Board Tests
@@ -52,13 +53,16 @@ namespace CornwayGame.Tests
             string expectedBoardId = "2345";
             string actualBoardId = string.Empty;
             int[][] liveCellsCoordinates = new int[2][] { new int[] { 1, 2 }, new int[] { 2, 4 } };
-            bool[][] previousBoard = new bool[3][]{
+            Game previousGame = new Game
+            {
+                Board = new bool[3][]{
                 new bool[] { false, false, false, false, false } ,
                 new bool[] { false, false, false, false, false },
                 new bool[] { false, false, false, false, false }
+            }
             };
 
-            bool[][] actualBoard = Array.Empty<bool[]>();
+            Game actualBoard = new Game { Board = new bool[0][] { } };
             bool[][] expectedBoard = new bool[3][]{
                 new bool[] { false, false, false, false, false },
                 new bool[] { false, false, true, false, false },
@@ -66,9 +70,9 @@ namespace CornwayGame.Tests
             };
 
             _gameRepositoryMock.Setup(x => x.GetById(expectedBoardId))
-                    .Returns(previousBoard);
-            _gameRepositoryMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<bool[][]>()))
-                    .Callback<string, bool[][]>((_, x) => actualBoard = x);
+                    .Returns(previousGame);
+            _gameRepositoryMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<Game>()))
+                    .Callback<string, Game>((_, x) => actualBoard = x);
 
             _gameService.UpdateLiveCells(expectedBoardId, liveCellsCoordinates);
 
@@ -77,7 +81,7 @@ namespace CornwayGame.Tests
                 var row = expectedBoard[i];
                 for (int j = 0; j < row.Length; j++)
                 {
-                    Assert.That(actualBoard[i][j], Is.EqualTo(row[j]));
+                    Assert.That(actualBoard.Board[i][j], Is.EqualTo(row[j]));
                 }
             }
         }
@@ -86,7 +90,7 @@ namespace CornwayGame.Tests
         public void GivenNonExistent_WhenFillLiveCells_ThenShouldThrowException()
         {
             _gameRepositoryMock.Setup(x => x.GetById(It.IsAny<string>()))
-                    .Returns<bool[][]>(null);
+                    .Returns<Game>(null);
             Assert.Throws<ArgumentException>(() => _gameService.UpdateLiveCells(string.Empty, new int[][] { }), "Board Does not exists.");
         }
 
@@ -96,13 +100,16 @@ namespace CornwayGame.Tests
             string expectedBoardId = "2345";
             string actualBoardId = string.Empty;
             int[][] liveCellsCoordinates = new int[3][] { null, new int[] { 1, 2 }, new int[] { 2, 4 } };
-            bool[][] previousBoard = new bool[3][]{
+            Game previousBoard = new Game
+            {
+                Board = new bool[3][]{
                 new bool[] { false, false, false, false, false } ,
                 new bool[] { false, false, false, false, false },
                 new bool[] { false, false, false, false, false }
+            }
             };
 
-            bool[][] actualBoard = Array.Empty<bool[]>();
+            Game actualBoard = new Game { Board = new bool[0][] { } };
             bool[][] expectedBoard = new bool[3][]{
                 new bool[] { false, false, false, false, false },
                 new bool[] { false, false, true, false, false },
@@ -111,8 +118,8 @@ namespace CornwayGame.Tests
 
             _gameRepositoryMock.Setup(x => x.GetById(expectedBoardId))
                     .Returns(previousBoard);
-            _gameRepositoryMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<bool[][]>()))
-                    .Callback<string, bool[][]>((_, x) => actualBoard = x);
+            _gameRepositoryMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<Game>()))
+                    .Callback<string, Game>((_, x) => actualBoard = x);
 
             _gameService.UpdateLiveCells(expectedBoardId, liveCellsCoordinates);
 
@@ -121,7 +128,7 @@ namespace CornwayGame.Tests
                 var row = expectedBoard[i];
                 for (int j = 0; j < row.Length; j++)
                 {
-                    Assert.That(actualBoard[i][j], Is.EqualTo(row[j]));
+                    Assert.That(actualBoard.Board[i][j], Is.EqualTo(row[j]));
                 }
             }
         }
@@ -129,50 +136,58 @@ namespace CornwayGame.Tests
 
         #region Next Generation
         [Test]
-        public void GivenAExistentBoard_WhenNextGeneration_ThenItShouldReturnDifferentBoard()
+        public void GivenAExistentBoard_WhenNextGeneration_ThenItShouldReturnSameBoard()
         {
-            var expectedBoard = new bool[3][] {
+            var expectedBoard = new Game
+            {
+                Board = new bool[3][] {
                 new bool[] { false, false, false, false },
                 new bool[] { false, false, false, false },
                 new bool[] { false, false, false, false }
+            }
             };
 
-            var actualBoard = new bool[0][] { };
+            var actualBoard = new Game { Board = new bool[0][] { } };
 
             _gameRepositoryMock.Setup(x => x.GetById(It.IsAny<string>()))
                 .Returns(expectedBoard);
 
-            _gameRepositoryMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<bool[][]>()))
-                            .Callback<string, bool[][]>((x, y) => actualBoard = y);
+            _gameRepositoryMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<Game>()))
+                            .Callback<string, Game>((x, y) => actualBoard = y);
 
+            _gameRulesMock.Setup(x => x.ShouldToggleCell(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool[][]>()))
+                .Returns(false);
             _gameService.NextGeneration(string.Empty);
 
-            Assert.That(expectedBoard, Is.Not.SameAs(actualBoard));
+            Assert.That(expectedBoard.Board, Is.EqualTo(actualBoard.Board));
         }
 
         [Test]
         public void GivenAExistentBoard_WhenNextGeneration_ThenItShouldReturnDifferentBoardCells()
         {
-            var expectedBoard = new bool[3][] {
+            var expectedBoard = new Game
+            {
+                Board = new bool[3][] {
                 new bool[] { false, false, false, false },
                 new bool[] { false, false, false, false },
                 new bool[] { false, false, false, false }
+            }
             };
 
-            var actualBoard = new bool[0][] { };
+            var actualBoard = new Game { Board = new bool[0][] { } };
 
             _gameRepositoryMock.Setup(x => x.GetById(It.IsAny<string>()))
                 .Returns(expectedBoard);
 
-            _gameRepositoryMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<bool[][]>()))
-                            .Callback<string, bool[][]>((x, y) => actualBoard = y);
+            _gameRepositoryMock.Setup(x => x.Update(It.IsAny<string>(), It.IsAny<Game>()))
+                            .Callback<string, Game>((x, y) => actualBoard = y);
 
             _gameRulesMock.Setup(x => x.ShouldToggleCell(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<bool[][]>()))
                 .Returns(true);
 
             _gameService.NextGeneration(string.Empty);
 
-            Assert.That(expectedBoard, Is.Not.EqualTo(actualBoard));
+            Assert.That(expectedBoard.Board, Is.Not.EqualTo(actualBoard.Board));
         }
         #endregion
     }
