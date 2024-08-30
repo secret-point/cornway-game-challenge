@@ -1,4 +1,5 @@
 ﻿using CornwayGame.BL.Interfaces;
+using CornwayGame.BL.Model;
 using CornwayGame.Web.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,7 @@ namespace CornwayGame.Web.Controllers
         public bool[][] NextGeneration([FromRoute] string boardId)
         {
             var nextGenerationBoard = _gameService.NextGeneration(boardId);
-            return nextGenerationBoard;
+            return nextGenerationBoard.Item1;
         }
 
         [HttpPost("{boardId}/GetGeneration")]
@@ -39,17 +40,16 @@ namespace CornwayGame.Web.Controllers
         }
 
         [HttpPost("{boardId}/GetFinalState")]
-        public int GetFinalState([FromRoute] string boardId)
+        public FinalStateResponse GetFinalState([FromRoute] string boardId)
         {
-            var nextGenerationBoard = _gameService.GetGeneration(boardId);
-            return nextGenerationBoard.Generation;
+            var nextGenerationBoard = _gameService.GetFinalState(boardId);
+            return nextGenerationBoard;
         }
 
         [HttpPost("{boardId}/Restart")]
-        public int Restart([FromRoute] string boardId)
+        public void Restart([FromRoute] string boardId)
         {
-            var nextGenerationBoard = _gameService.GetGeneration(boardId);
-            return nextGenerationBoard.Generation;
+            _gameService.Restart(boardId);
         }
     }
 }

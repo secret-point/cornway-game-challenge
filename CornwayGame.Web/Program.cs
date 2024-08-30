@@ -1,8 +1,12 @@
 using CornwayGame.BL;
 using CornwayGame.BL.GameRules;
 using CornwayGame.BL.Interfaces;
+using CornwayGame.BL.Model;
 using CornwayGame.Data;
 using CornwayGame.Data.Interfaces;
+using CornwayGame.Web;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +19,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IGameService, GameService>();
 builder.Services.AddScoped<IGameRules, GameRules>();
+builder.Services.Configure<GameSettings>(
+    builder.Configuration.GetSection("GameSettings"));
 
 var app = builder.Build();
 

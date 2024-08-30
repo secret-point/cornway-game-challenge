@@ -17,7 +17,7 @@ namespace CornwayGame.Tests
         {
             _gameRepositoryMock = new Mock<IGameRepository>();
             _gameRulesMock = new Mock<IGameRules>();
-            _gameService = new GameService(_gameRepositoryMock.Object, _gameRulesMock.Object);
+            _gameService = new GameService(_gameRepositoryMock.Object, _gameRulesMock.Object, null);
         }
         #region Create Board Tests
         [Test]
