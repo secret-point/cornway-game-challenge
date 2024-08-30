@@ -45,5 +45,20 @@ namespace CornwayGame.Tests
 
             Assert.That(expected, Is.EqualTo(actual));
         }
+
+        [Test]
+        public void GivenAExistentBoard_WhenLiveCellNearTreeLiveCells_ThenItShouldNotToggle()
+        {
+            var board = new bool[3][]{
+                new bool[3] { false, true, true },
+                new bool[3] { true, true, false },
+                new bool[3] { false, false, false }
+            };
+            var expected = false;
+            var actual = _gameRules.ShouldToggleCell(1, 1, board);
+
+
+            Assert.That(expected, Is.EqualTo(actual));
+        }
     }
 }

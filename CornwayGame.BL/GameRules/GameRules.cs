@@ -29,7 +29,7 @@ namespace CornwayGame.BL.GameRules
             var underpopulationRule = countLiveNeighbor < 2;
             var nearNeighborRule = countLiveNeighbor != 2;
 
-            return underpopulationRule && nearNeighborRule;
+            return underpopulationRule || nearNeighborRule;
         }
 
         public (int, int) CalculateNeighbor(int i, int h, bool[][] board)
