@@ -2,7 +2,7 @@
 
 namespace CornwayGame.BL.GameRules
 {
-    public class GameRules:IGameRules
+    public class GameRules : IGameRules
     {
         //Neighbors
         //123
@@ -24,6 +24,13 @@ namespace CornwayGame.BL.GameRules
 
         public bool ShouldToggleCell(int i, int h, bool[][] board)
         {
+            (int countLiveNeighbor, int countDeadNeighbor) = CalculateNeighbor(i, h, board);
+
+            return countLiveNeighbor < 2;
+        }
+
+        public (int, int) CalculateNeighbor(int i, int h, bool[][] board)
+        {
             var countLiveNeighbor = 0;
             var countDeadNeighbor = 0;
             for (int coordinateIndex = 0; coordinateIndex < neighborCoordinates.Length; coordinateIndex++)
@@ -42,7 +49,7 @@ namespace CornwayGame.BL.GameRules
                     countDeadNeighbor++;
                 }
             }
-            return countLiveNeighbor <2;
+            return (countLiveNeighbor, countDeadNeighbor);
         }
     }
 }
