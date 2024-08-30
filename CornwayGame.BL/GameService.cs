@@ -33,8 +33,9 @@ namespace CornwayGame.BL
         public void NextGeneration(string boardId)
         {
             var board = _gameRepository.GetById(boardId);
-            var clonedBoard = BoardDeepClone(board);
-            _gameRepository.Update(boardId, clonedBoard);
+            var boardCloned = BoardDeepClone(board);
+
+            _gameRepository.Update(boardId, boardCloned);
         }
 
         public void UpdateLiveCells(string boardId, int[][] liveCellsCoordinates)
