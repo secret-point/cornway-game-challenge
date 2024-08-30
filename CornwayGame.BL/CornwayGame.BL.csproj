@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CornwayGame.Data\CornwayGame.Data.csproj" />
+  </ItemGroup>
+
 </Project>
