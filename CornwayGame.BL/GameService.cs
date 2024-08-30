@@ -32,7 +32,9 @@ namespace CornwayGame.BL
 
         public void UpdateLiveCells(string boardId, int[][] liveCellsCoordinates)
         {
-            var board = _gameRepository.GetById(boardId);
+            var board = _gameRepository.GetById(boardId); 
+            if (board == null) throw new ArgumentException("Board Does not exists.");
+
             foreach (var cell in liveCellsCoordinates)
             {
                 if (cell == null) continue;
