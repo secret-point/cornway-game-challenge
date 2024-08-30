@@ -90,12 +90,12 @@ namespace CornwayGame.Tests
             Assert.That(expected, Is.EqualTo(actual));
         }
         [Test]
-        public void GivenDeadCell_WhenDoesMatchTreeLiveCell_ThenShouldToggleCell()
+        public void GivenDeadCell_WhenMatchTreeLiveCell_ThenShouldToggleCell()
         {
 
             var board = new bool[3][]{
-                new bool[3] { false, true, false },
-                new bool[3] { true, false, false },
+                new bool[3] { false, true, true },
+                new bool[3] { true, false, true },
                 new bool[3] { false, true, false }
             };
             var expected = true;

@@ -8,6 +8,6 @@ namespace CornwayGame.BL.GameRules
 {
     public abstract class BaseRuleGame
     {
-
+        public abstract bool CanToggleCell(int currentCountNeighbor);
     }
 }

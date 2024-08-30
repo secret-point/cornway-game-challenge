@@ -22,15 +22,25 @@ namespace CornwayGame.BL.GameRules
             new int[2] { 1, 1 },//position8
         };
 
+        private BaseRuleGame deadRuleGame;
+        private BaseRuleGame liveRuleGame;
+
+        public GameRules()
+        {
+            liveRuleGame = new LiveRuleGame();
+            deadRuleGame = new DeadRuleGame();
+        }
+
         public bool ShouldToggleCell(int i, int h, bool[][] board)
         {
             (int countLiveNeighbor, int countDeadNeighbor) = CalculateNeighbor(i, h, board);
 
-            var underpopulationRule = countLiveNeighbor < 2;
-            var nearNeighborRule = countLiveNeighbor != 2 && countLiveNeighbor != 3;
-            var overpopulationRule = countLiveNeighbor > 3;
-
-            return underpopulationRule || nearNeighborRule || overpopulationRule;
+            var currentCell = board[i][h];
+            var currentRuleGame = currentCell ? liveRuleGame : deadRuleGame;
+            var currentCountNeighbor= currentCell ? countLiveNeighbor:countDeadNeighbor;
+            
+            
+            return currentRuleGame.CanToggleCell(currentCountNeighbor);
         }
 
         public (int, int) CalculateNeighbor(int i, int h, bool[][] board)
