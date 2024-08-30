@@ -16,7 +16,7 @@ namespace CornwayGame.Tests
             _gameRepositoryMock = new Mock<IGameRepository>();
             _gameService = new GameService(_gameRepositoryMock.Object);
         }
-
+        #region Create Board Tests
         [Test]
         public void GivenANewBoard_WhenIsCreated_ThenShouldBeStored()
         {
@@ -123,5 +123,8 @@ namespace CornwayGame.Tests
                 }
             }
         }
+        #endregion
+
     }
+
 }
